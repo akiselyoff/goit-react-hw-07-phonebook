@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
+import {
+  useGetContactsQuery,
+  useAddContactMutation,
+} from '../../API/contactsApi';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { addContact } from '../../redux/reducers';
-import { getContacts } from '../../redux/selectors';
 
 import s from './ContactForm.module.css';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+
+  const { data: contacts } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
 
   const handleInputNameChange = e => {
     const { value } = e.currentTarget;
@@ -37,7 +38,7 @@ const ContactForm = () => {
         closeOnClick: true,
       });
     } else {
-      dispatch(addContact({ id: nanoid(5), name, number }));
+      addContact({ name, number });
       setName('');
       setNumber('');
     }
