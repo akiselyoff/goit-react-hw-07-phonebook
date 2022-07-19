@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   useGetContactsQuery,
   useAddContactMutation,
@@ -13,7 +13,14 @@ const ContactForm = () => {
   const [number, setNumber] = useState('');
 
   const { data: contacts } = useGetContactsQuery();
-  const [addContact] = useAddContactMutation();
+  const [addContact, { isSuccess }] = useAddContactMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      setName('');
+      setNumber('');
+    }
+  }, [isSuccess]);
 
   const handleInputNameChange = e => {
     const { value } = e.currentTarget;
@@ -39,8 +46,6 @@ const ContactForm = () => {
       });
     } else {
       addContact({ name, number });
-      setName('');
-      setNumber('');
     }
   };
 

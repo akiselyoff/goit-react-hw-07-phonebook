@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import s from './ContactItem.module.css';
 import { useDeleteContactMutation } from '../../API/contactsApi';
 
@@ -17,18 +16,10 @@ const ContactItem = ({ contact }) => {
         onClick={() => deleteContact(id)}
         disabled={isLoading}
       >
-        Delete
+        {isLoading ? 'Deleting...' : 'Delete'}
       </button>
     </li>
   );
-};
-
-ContactItem.propTypes = {
-  contact: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-  }),
 };
 
 export default ContactItem;
