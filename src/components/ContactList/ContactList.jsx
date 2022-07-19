@@ -26,8 +26,8 @@ const ContactList = () => {
       {isLoading && <p>Loading...</p>}
       {error && <p>Error!</p>}
 
-      {filteredContacts.map(({ id, name, number }) => {
-        return <ContactItem key={id} contact={{ id, name, number }} />;
+      {filteredContacts.map(({ id, name, phone }) => {
+        return <ContactItem key={id} contact={{ id, name, phone }} />;
       })}
     </ul>
   );
